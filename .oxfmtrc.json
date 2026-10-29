@@ -1,0 +1,16 @@
+{
+    "$schema": "./node_modules/oxfmt/configuration_schema.json",
+    "printWidth": 120,
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true,
+    "bracketSpacing": false,
+    "arrowParens": "avoid",
+    "ignorePatterns": [
+        "dist",
+        "pnpm-lock.yaml",
+        "dev/src/routeTree.gen.ts",
+        "dev/src/payload-types.ts",
+        "dev/src/app/_payload"
+    ]
+}

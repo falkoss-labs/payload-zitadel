@@ -1,0 +1,92 @@
+{
+    "name": "@falkoss/payload-zitadel",
+    "version": "1.0.0-beta.0",
+    "description": "Payload CMS plugin for authentication via Zitadel",
+    "keywords": [
+        "authentication",
+        "cms",
+        "oidc",
+        "payload",
+        "payload-plugin",
+        "zitadel"
+    ],
+    "homepage": "https://github.com/falkoss-labs/payload-zitadel#readme",
+    "bugs": {
+        "url": "https://github.com/falkoss-labs/payload-zitadel/issues"
+    },
+    "license": "MIT",
+    "author": "falkOSS labs (https://labs.falkoss.org)",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/falkoss-labs/payload-zitadel.git"
+    },
+    "files": [
+        "dist"
+    ],
+    "type": "module",
+    "sideEffects": false,
+    "exports": {
+        ".": "./src/index.ts",
+        "./client": "./src/exports/client.ts"
+    },
+    "publishConfig": {
+        "exports": {
+            ".": {
+                "types": "./dist/index.d.ts",
+                "default": "./dist/index.js"
+            },
+            "./client": {
+                "types": "./dist/exports/client.d.ts",
+                "default": "./dist/exports/client.js"
+            }
+        },
+        "access": "public",
+        "provenance": true
+    },
+    "scripts": {
+        "build": "pnpm clean && tsc -p tsconfig.build.json",
+        "clean": "node -e \"fs.rmSync('dist',{recursive:true,force:true})\"",
+        "dev": "pnpm --filter dev dev",
+        "format": "oxfmt",
+        "format:check": "oxfmt --check",
+        "lint": "oxlint",
+        "test": "pnpm test:unit && pnpm test:int",
+        "test:unit": "vitest run --project unit",
+        "test:int": "vitest run --project int",
+        "test:e2e": "pnpm --filter dev test:e2e",
+        "typecheck": "tsc --noEmit && pnpm --filter dev typecheck",
+        "changeset": "changeset",
+        "prepack": "pnpm build",
+        "release:prepare": "node scripts/release.ts"
+    },
+    "dependencies": {
+        "jose": "catalog:",
+        "oauth4webapi": "catalog:"
+    },
+    "devDependencies": {
+        "@changesets/cli": "catalog:",
+        "@payloadcms/db-sqlite": "catalog:payload",
+        "@payloadcms/translations": "catalog:payload",
+        "@payloadcms/ui": "catalog:payload",
+        "@types/node": "catalog:",
+        "@types/react": "catalog:",
+        "esbuild": "catalog:",
+        "oauth2-mock-server": "catalog:",
+        "oxfmt": "catalog:",
+        "oxlint": "catalog:",
+        "payload": "catalog:payload",
+        "react": "catalog:",
+        "typescript": "catalog:",
+        "vitest": "catalog:"
+    },
+    "peerDependencies": {
+        "@payloadcms/translations": ">=4.0.0-beta.6 <5",
+        "@payloadcms/ui": ">=4.0.0-beta.6 <5",
+        "payload": ">=4.0.0-beta.6 <5",
+        "react": "^19.2.0"
+    },
+    "engines": {
+        "node": ">=26"
+    },
+    "packageManager": "pnpm@12.16.1"
+}

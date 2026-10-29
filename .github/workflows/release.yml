@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: MIT
+# stages the package on npm when a GitHub release is published, via trusted publishing (OIDC, no token),
+# it goes live once approved with 2FA: `npm stage approve <id>` or on npmjs.com
+# the version is prepared beforehand with `pnpm release:prepare`, the release tag must be `v<version>`
+name: release
+
+on:
+    release:
+        types: [published]
+
+permissions:
+    contents: read
+    id-token: write
+
+concurrency:
+    group: release
+    cancel-in-progress: false
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v7
+              with:
+                  ref: ${{ github.event.release.tag_name }}
+            - uses: pnpm/action-setup@v6
+            - uses: actions/setup-node@v7
+              with:
+                  node-version-file: .nvmrc
+                  cache: pnpm
+                  registry-url: https://registry.npmjs.org
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm typecheck
+            - run: pnpm test:unit
+            - run: node scripts/publish.ts
+              env:
+                  RELEASE_TAG: ${{ github.event.release.tag_name }}
+                  RELEASE_PRERELEASE: ${{ github.event.release.prerelease }}

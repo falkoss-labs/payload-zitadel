@@ -1,0 +1,13 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.env
+.env.local
+dev/.tanstack/
+dev/.output/
+dev/dist/
+dev/*.db
+dev/zitadel/.secrets/
+test-results/
+playwright-report/
+.DS_Store
